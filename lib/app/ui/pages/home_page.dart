@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:shopping_splitter/app/ui/utils/screen_size.dart';
-import 'package:shopping_splitter/app/ui/utils/theme_colors.dart';
+import 'package:shopping_splitter/app/ui/models/division_type.dart';
+import 'package:shopping_splitter/app/ui/models/total_model.dart';
+import 'package:shopping_splitter/app/ui/total_widget.dart';
 
-import '../division/division.dart';
+import '../division_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -12,9 +13,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  TotalModel totalModel = TotalModel();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: const Text(
           'RACHADOR DE COMPRAS',
@@ -25,55 +29,33 @@ class _HomePageState extends State<HomePage> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          const Division(labelText: 'Valor compra - 50%'),
-          const Division(labelText: 'Valor compra - 70%'),
-          const Division(labelText: 'Valor compra - Isadora'),
-          const Division(labelText: 'Valor compra - Samuel'),
-          Row(
-            children: [
-              Container(
-                width: getScreenWidth(context) * 0.6,
-                height: getScreenHeight(context) * 0.18,
-                color: Colors.white,
-              ),
-              Container(
-                width: getScreenWidth(context) * 0.25,
-                height: getScreenHeight(context) * 0.15,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: getPrimaryContainerColor(context),
-                ),
-                child: const Center(
-                  child: Text(
-                    'R\$300,00',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 18,
-                    ),
-                  ),
-                ),
-              ),
-            ],
+          DivisionWidget(
+            labelText: 'Valor compra - 50%',
+            calculateTotalValue: totalModel.calculateTotalValue,
+            divisionType: DivisionType.valueFiftyPercent,
           ),
-          Container(
-            width: getScreenWidth(context) * 0.25,
-            height: getScreenHeight(context) * 0.15,
-            padding: EdgeInsets.zero,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: getPrimaryContainerColor(context),
-            ),
-            child: const Center(
-              child: Text(
-                'R\$300,00',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w700,
-                  fontSize: 18,
-                ),
-              ),
-            ),
+          DivisionWidget(
+            labelText: 'Valor compra - 70%',
+            calculateTotalValue: totalModel.calculateTotalValue,
+            divisionType: DivisionType.valueSeventyPercent,
+          ),
+          DivisionWidget(
+            labelText: 'Valor compra - Isadora',
+            calculateTotalValue: totalModel.calculateTotalValue,
+            divisionType: DivisionType.isadoraValue,
+          ),
+          DivisionWidget(
+            labelText: 'Valor compra - Samuel',
+            calculateTotalValue: totalModel.calculateTotalValue,
+            divisionType: DivisionType.samuelValue,
+          ),
+          TotalWidget(
+            cardOwner: 'Isadora Resende Peres',
+            totalValue: totalModel.isadoraTotalValue,
+          ),
+          TotalWidget(
+            cardOwner: 'Samuel Castro de Lima',
+            totalValue: totalModel.samuelTotalValue,
           ),
         ],
       ),
