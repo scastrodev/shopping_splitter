@@ -1,37 +1,42 @@
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:flutter/material.dart';
+
 import 'package:shopping_splitter/app/ui/models/division_type.dart';
+import 'package:shopping_splitter/app/ui/models/total_model.dart';
 
 import 'utils/screen_size.dart';
 import 'utils/theme_colors.dart';
 
-class DivisionWidget extends StatelessWidget {
+class DivisionWidget extends StatefulWidget {
   final String labelText;
-  final Function(DivisionType, double) calculateTotalValue;
+  final TotalModel totalModel;
   final DivisionType divisionType;
+  final VoidCallback notifyParent;
 
   const DivisionWidget({
     Key? key,
     required this.labelText,
-    required this.calculateTotalValue,
+    required this.totalModel,
     required this.divisionType,
+    required this.notifyParent,
   }) : super(key: key);
+
+  @override
+  State<DivisionWidget> createState() => _DivisionWidgetState();
+}
+
+class _DivisionWidgetState extends State<DivisionWidget> {
+  final TextEditingController textEditingController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        Container(
-          width: getScreenWidth(context) * 0.6,
-          height: getScreenHeight(context) * 0.07,
-          decoration: BoxDecoration(
-            color: getPrimaryColor(context),
-            borderRadius: const BorderRadius.all(Radius.circular(15)),
-          ),
+        ElevatedButton(
           child: Center(
             child: Text(
-              labelText,
+              widget.labelText,
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w700,
@@ -39,11 +44,27 @@ class DivisionWidget extends StatelessWidget {
               ),
             ),
           ),
+          style: ElevatedButton.styleFrom(
+            fixedSize: Size(
+              getScreenWidth(context) * 0.6,
+              getScreenHeight(context) * 0.07,
+            ),
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(15)),
+            ),
+          ),
+          onPressed: () {},
+          onLongPress: () {
+            textEditingController.clear();
+            widget.totalModel.registerDivisionValues(widget.divisionType, 0);
+            widget.notifyParent();
+          },
         ),
         SizedBox(
           width: getScreenWidth(context) * 0.3,
           height: getScreenHeight(context) * 0.07,
           child: TextField(
+            controller: textEditingController,
             textAlign: TextAlign.center,
             keyboardType: TextInputType.number,
             style: const TextStyle(
@@ -70,22 +91,29 @@ class DivisionWidget extends StatelessWidget {
             ),
             inputFormatters: [
               CurrencyTextInputFormatter(
+                symbol: '',
                 locale: 'br',
                 decimalDigits: 2,
-                symbol: '',
               ),
             ],
             onChanged: (String value) {
-              print('########### ${value.replaceAll(',', '.')}');
-              if (!value.contains('-') || value != '0') {
-                calculateTotalValue(
-                  divisionType,
-                  double.parse(value.replaceAll(',', '.')),
+              double? doubleValue = double.tryParse(value.replaceAll(',', '.'));
+
+              if (doubleValue != null) {
+                widget.totalModel.registerDivisionValues(
+                  widget.divisionType,
+                  doubleValue,
+                );
+              } else {
+                widget.totalModel.registerDivisionValues(
+                  widget.divisionType,
+                  0,
                 );
               }
+              widget.notifyParent();
             },
           ),
-        )
+        ),
       ],
     );
   }

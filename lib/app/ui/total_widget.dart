@@ -22,9 +22,7 @@ class TotalWidget extends StatelessWidget {
           height: getScreenHeight(context) * 0.18,
           decoration: const BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.all(
-              Radius.circular(10),
-            ),
+            borderRadius: BorderRadius.all(Radius.circular(10)),
           ),
           child: Align(
             alignment: Alignment.topLeft,
@@ -83,11 +81,11 @@ class TotalWidget extends StatelessWidget {
           ),
           child: Center(
             child: Text(
-              'R\$ ${totalValue.roundToDouble()}',
+              'R\$ ${totalValue.toStringAsFixed(2)}',
               style: const TextStyle(
+                fontSize: 18,
                 color: Colors.white,
                 fontWeight: FontWeight.w700,
-                fontSize: 18,
               ),
             ),
           ),

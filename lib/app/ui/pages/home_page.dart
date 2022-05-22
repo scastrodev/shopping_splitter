@@ -15,39 +15,45 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   TotalModel totalModel = TotalModel();
 
+  void refresh() => setState(() {});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: const Text(
-          'RACHADOR DE COMPRAS',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
-        ),
         centerTitle: true,
+        title: Text(
+          'Rachador de compras'.toUpperCase(),
+          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+        ),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           DivisionWidget(
             labelText: 'Valor compra - 50%',
-            calculateTotalValue: totalModel.calculateTotalValue,
+            totalModel: totalModel,
             divisionType: DivisionType.valueFiftyPercent,
+            notifyParent: refresh,
           ),
           DivisionWidget(
             labelText: 'Valor compra - 70%',
-            calculateTotalValue: totalModel.calculateTotalValue,
+            totalModel: totalModel,
             divisionType: DivisionType.valueSeventyPercent,
+            notifyParent: refresh,
           ),
           DivisionWidget(
             labelText: 'Valor compra - Isadora',
-            calculateTotalValue: totalModel.calculateTotalValue,
+            totalModel: totalModel,
             divisionType: DivisionType.isadoraValue,
+            notifyParent: refresh,
           ),
           DivisionWidget(
             labelText: 'Valor compra - Samuel',
-            calculateTotalValue: totalModel.calculateTotalValue,
+            totalModel: totalModel,
             divisionType: DivisionType.samuelValue,
+            notifyParent: refresh,
           ),
           TotalWidget(
             cardOwner: 'Isadora Resende Peres',
