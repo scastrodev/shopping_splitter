@@ -1,0 +1,4 @@
+enum PurchaseStatus {
+  present,
+  past,
+}

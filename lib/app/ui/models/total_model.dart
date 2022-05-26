@@ -1,4 +1,5 @@
 import 'package:shopping_splitter/app/ui/models/division_model.dart';
+import 'package:shopping_splitter/app/ui/models/purchase_status.dart';
 
 import 'division_type.dart';
 
@@ -12,7 +13,11 @@ class TotalModel {
     this.samuelTotalValue = 0,
   });
 
-  void registerDivisionValues(DivisionType divisionType, double value) {
+  void registerDivisionValues(
+    DivisionType divisionType,
+    double value,
+    PurchaseStatus purchaseStatus,
+  ) {
     switch (divisionType) {
       case DivisionType.valueFiftyPercent:
         divisionModel.valueFiftyPercent = value;
@@ -28,18 +33,30 @@ class TotalModel {
         break;
     }
 
-    calculateIsadoraTotalValue();
-    calculateSamuelTotalValue();
+    if (purchaseStatus == PurchaseStatus.present) {
+      presentCalculateIsadoraTotalValue();
+      presentCalculateSamuelTotalValue();
+    } else {
+      pastCalculateIsadoraTotalValue();
+      pastCalculateSamuelTotalValue();
+    }
   }
 
-  void calculateIsadoraTotalValue() {
+  void presentCalculateIsadoraTotalValue() {
+    isadoraTotalValue = 0;
+    isadoraTotalValue += divisionModel.valueFiftyPercent / 2;
+  }
+
+  void presentCalculateSamuelTotalValue() {}
+
+  void pastCalculateIsadoraTotalValue() {
     isadoraTotalValue = 0;
     isadoraTotalValue += divisionModel.valueFiftyPercent / 2;
     isadoraTotalValue += divisionModel.valueSeventyPercent * 0.3;
     isadoraTotalValue += divisionModel.isadoraValue;
   }
 
-  void calculateSamuelTotalValue() {
+  void pastCalculateSamuelTotalValue() {
     samuelTotalValue = 0;
     samuelTotalValue += divisionModel.valueFiftyPercent / 2;
     samuelTotalValue += divisionModel.valueSeventyPercent * 0.7;

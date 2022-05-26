@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:shopping_splitter/app/ui/models/division_type.dart';
+import 'package:shopping_splitter/app/ui/models/purchase_status.dart';
 import 'package:shopping_splitter/app/ui/models/total_model.dart';
 import 'package:shopping_splitter/app/ui/total_widget.dart';
+import 'package:shopping_splitter/app/ui/utils/screen_size.dart';
+import 'package:shopping_splitter/app/ui/utils/theme_colors.dart';
 
 import '../division_widget.dart';
 
@@ -14,6 +17,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   TotalModel totalModel = TotalModel();
+  PurchaseStatus purchaseStatus = PurchaseStatus.present;
 
   void refresh() => setState(() {});
 
@@ -22,11 +26,37 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        centerTitle: true,
         title: Text(
           'Rachador de compras'.toUpperCase(),
-          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+          style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w700),
         ),
+        actions: [
+          const Center(
+            child: Text(
+              'Passada',
+              style: TextStyle(fontWeight: FontWeight.w700, fontSize: 15),
+            ),
+          ),
+          Switch(
+            activeColor: getPrimaryContainerColor(context),
+            inactiveThumbColor: getPrimaryContainerColor(context),
+            value: purchaseStatus == PurchaseStatus.present ? true : false,
+            onChanged: (bool newValue) {
+              setState(
+                () => newValue == true
+                    ? purchaseStatus = PurchaseStatus.present
+                    : purchaseStatus = PurchaseStatus.past,
+              );
+            },
+          ),
+          const Center(
+            child: Text(
+              'Presente',
+              style: TextStyle(fontWeight: FontWeight.w700, fontSize: 15),
+            ),
+          ),
+          SizedBox(width: getScreenWidth(context) * 0.05),
+        ],
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -36,24 +66,28 @@ class _HomePageState extends State<HomePage> {
             totalModel: totalModel,
             divisionType: DivisionType.valueFiftyPercent,
             notifyParent: refresh,
+            purchaseStatus: purchaseStatus,
           ),
           DivisionWidget(
             labelText: 'Valor compra - 70%',
             totalModel: totalModel,
             divisionType: DivisionType.valueSeventyPercent,
             notifyParent: refresh,
+            purchaseStatus: purchaseStatus,
           ),
           DivisionWidget(
             labelText: 'Valor compra - Isadora',
             totalModel: totalModel,
             divisionType: DivisionType.isadoraValue,
             notifyParent: refresh,
+            purchaseStatus: purchaseStatus,
           ),
           DivisionWidget(
             labelText: 'Valor compra - Samuel',
             totalModel: totalModel,
             divisionType: DivisionType.samuelValue,
             notifyParent: refresh,
+            purchaseStatus: purchaseStatus,
           ),
           TotalWidget(
             cardOwner: 'Isadora Resende Peres',

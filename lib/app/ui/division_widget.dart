@@ -2,6 +2,7 @@ import 'package:currency_text_input_formatter/currency_text_input_formatter.dart
 import 'package:flutter/material.dart';
 
 import 'package:shopping_splitter/app/ui/models/division_type.dart';
+import 'package:shopping_splitter/app/ui/models/purchase_status.dart';
 import 'package:shopping_splitter/app/ui/models/total_model.dart';
 
 import 'utils/screen_size.dart';
@@ -12,6 +13,7 @@ class DivisionWidget extends StatefulWidget {
   final TotalModel totalModel;
   final DivisionType divisionType;
   final VoidCallback notifyParent;
+  final PurchaseStatus purchaseStatus;
 
   const DivisionWidget({
     Key? key,
@@ -19,6 +21,7 @@ class DivisionWidget extends StatefulWidget {
     required this.totalModel,
     required this.divisionType,
     required this.notifyParent,
+    required this.purchaseStatus,
   }) : super(key: key);
 
   @override
@@ -56,7 +59,11 @@ class _DivisionWidgetState extends State<DivisionWidget> {
           onPressed: () {},
           onLongPress: () {
             textEditingController.clear();
-            widget.totalModel.registerDivisionValues(widget.divisionType, 0);
+            widget.totalModel.registerDivisionValues(
+              widget.divisionType,
+              0,
+              PurchaseStatus.present,
+            );
             widget.notifyParent();
           },
         ),
@@ -103,11 +110,13 @@ class _DivisionWidgetState extends State<DivisionWidget> {
                 widget.totalModel.registerDivisionValues(
                   widget.divisionType,
                   doubleValue,
+                  widget.purchaseStatus,
                 );
               } else {
                 widget.totalModel.registerDivisionValues(
                   widget.divisionType,
                   0,
+                  widget.purchaseStatus,
                 );
               }
               widget.notifyParent();
