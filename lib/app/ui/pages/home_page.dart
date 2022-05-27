@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shopping_splitter/app/ui/models/card_type.dart';
 import 'package:shopping_splitter/app/ui/models/division_type.dart';
 import 'package:shopping_splitter/app/ui/models/purchase_status.dart';
 import 'package:shopping_splitter/app/ui/models/total_model.dart';
@@ -41,13 +42,15 @@ class _HomePageState extends State<HomePage> {
             activeColor: getPrimaryContainerColor(context),
             inactiveThumbColor: getPrimaryContainerColor(context),
             value: purchaseStatus == PurchaseStatus.present ? true : false,
-            onChanged: (bool newValue) {
-              setState(
-                () => newValue == true
-                    ? purchaseStatus = PurchaseStatus.present
-                    : purchaseStatus = PurchaseStatus.past,
-              );
-            },
+            onChanged: !totalModel.divisionModel.isValuesEmpty
+                ? (bool newValue) {
+                    setState(
+                      () => newValue == true
+                          ? purchaseStatus = PurchaseStatus.present
+                          : purchaseStatus = PurchaseStatus.past,
+                    );
+                  }
+                : null,
           ),
           const Center(
             child: Text(
@@ -90,12 +93,14 @@ class _HomePageState extends State<HomePage> {
             purchaseStatus: purchaseStatus,
           ),
           TotalWidget(
-            cardOwner: 'Isadora Resende Peres',
+            cardOwner: 'Isadora R Peres',
             totalValue: totalModel.isadoraTotalValue,
+            cardType: CardType.valeCard,
           ),
           TotalWidget(
             cardOwner: 'Samuel Castro de Lima',
             totalValue: totalModel.samuelTotalValue,
+            cardType: CardType.ticketCard,
           ),
         ],
       ),

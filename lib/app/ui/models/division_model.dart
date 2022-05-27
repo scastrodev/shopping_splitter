@@ -10,4 +10,27 @@ class DivisionModel {
     this.isadoraValue = 0,
     this.samuelValue = 0,
   });
+
+  bool get isValuesEmpty {
+    if (valueFiftyPercent > 0 ||
+        valueSeventyPercent > 0 ||
+        isadoraValue > 0 ||
+        samuelValue > 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  double get presentValueFiftyPercent =>
+      valueFiftyPercent - valueSeventyPercent - isadoraValue - samuelValue;
+
+  double get presentValueSeventyPercent =>
+      valueSeventyPercent - valueFiftyPercent - isadoraValue - samuelValue;
+
+  double get presentIsadoraValue =>
+      isadoraValue - samuelValue - valueFiftyPercent - valueSeventyPercent;
+
+  double get presentSamuelValue =>
+      samuelValue - isadoraValue - valueFiftyPercent - valueSeventyPercent;
 }

@@ -33,33 +33,35 @@ class TotalModel {
         break;
     }
 
+    calculateIsadoraTotalValue(purchaseStatus);
+    calculateSamuelTotalValue(purchaseStatus);
+  }
+
+  void calculateIsadoraTotalValue(PurchaseStatus purchaseStatus) {
+    isadoraTotalValue = 0;
+
     if (purchaseStatus == PurchaseStatus.present) {
-      presentCalculateIsadoraTotalValue();
-      presentCalculateSamuelTotalValue();
+      isadoraTotalValue += divisionModel.presentValueFiftyPercent / 2;
+      isadoraTotalValue += divisionModel.presentValueSeventyPercent * 0.3;
+      isadoraTotalValue += divisionModel.presentIsadoraValue;
     } else {
-      pastCalculateIsadoraTotalValue();
-      pastCalculateSamuelTotalValue();
+      isadoraTotalValue += divisionModel.valueFiftyPercent / 2;
+      isadoraTotalValue += divisionModel.valueSeventyPercent * 0.3;
+      isadoraTotalValue += divisionModel.isadoraValue;
     }
   }
 
-  void presentCalculateIsadoraTotalValue() {
-    isadoraTotalValue = 0;
-    isadoraTotalValue += divisionModel.valueFiftyPercent / 2;
-  }
-
-  void presentCalculateSamuelTotalValue() {}
-
-  void pastCalculateIsadoraTotalValue() {
-    isadoraTotalValue = 0;
-    isadoraTotalValue += divisionModel.valueFiftyPercent / 2;
-    isadoraTotalValue += divisionModel.valueSeventyPercent * 0.3;
-    isadoraTotalValue += divisionModel.isadoraValue;
-  }
-
-  void pastCalculateSamuelTotalValue() {
+  void calculateSamuelTotalValue(PurchaseStatus purchaseStatus) {
     samuelTotalValue = 0;
-    samuelTotalValue += divisionModel.valueFiftyPercent / 2;
-    samuelTotalValue += divisionModel.valueSeventyPercent * 0.7;
-    samuelTotalValue += divisionModel.samuelValue;
+
+    if (purchaseStatus == PurchaseStatus.present) {
+      samuelTotalValue += divisionModel.presentValueFiftyPercent / 2;
+      samuelTotalValue += divisionModel.presentValueSeventyPercent * 0.7;
+      samuelTotalValue += divisionModel.presentSamuelValue;
+    } else {
+      samuelTotalValue += divisionModel.valueFiftyPercent / 2;
+      samuelTotalValue += divisionModel.valueSeventyPercent * 0.7;
+      samuelTotalValue += divisionModel.samuelValue;
+    }
   }
 }
