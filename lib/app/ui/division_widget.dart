@@ -29,14 +29,18 @@ class DivisionWidget extends StatefulWidget {
 }
 
 class _DivisionWidgetState extends State<DivisionWidget> {
-  final TextEditingController textEditingController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        ElevatedButton(
+        Container(
+          width: getScreenWidth(context) * 0.6,
+          height: getScreenHeight(context) * 0.07,
+          decoration: BoxDecoration(
+            color: getPrimaryColor(context),
+            borderRadius: const BorderRadius.all(Radius.circular(15)),
+          ),
           child: Center(
             child: Text(
               widget.labelText,
@@ -47,33 +51,14 @@ class _DivisionWidgetState extends State<DivisionWidget> {
               ),
             ),
           ),
-          style: ElevatedButton.styleFrom(
-            fixedSize: Size(
-              getScreenWidth(context) * 0.6,
-              getScreenHeight(context) * 0.07,
-            ),
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(15)),
-            ),
-          ),
-          onPressed: () {},
-          onLongPress: () {
-            textEditingController.clear();
-            widget.totalModel.registerDivisionValues(
-              widget.divisionType,
-              0,
-              PurchaseStatus.present,
-            );
-            widget.notifyParent();
-          },
         ),
         SizedBox(
           width: getScreenWidth(context) * 0.3,
           height: getScreenHeight(context) * 0.07,
           child: TextField(
-            controller: textEditingController,
             textAlign: TextAlign.center,
             keyboardType: TextInputType.number,
+            textInputAction: TextInputAction.next,
             style: const TextStyle(
               fontSize: 20,
               color: Colors.white,
@@ -103,7 +88,7 @@ class _DivisionWidgetState extends State<DivisionWidget> {
                 decimalDigits: 2,
               ),
             ],
-            onChanged: (String value) {
+            onSubmitted: (String value) {
               double? doubleValue = double.tryParse(value.replaceAll(',', '.'));
 
               if (doubleValue != null) {
@@ -121,6 +106,25 @@ class _DivisionWidgetState extends State<DivisionWidget> {
               }
               widget.notifyParent();
             },
+
+            // onChanged: (String value) {
+            //   double? doubleValue = double.tryParse(value.replaceAll(',', '.'));
+
+            //   if (doubleValue != null) {
+            //     widget.totalModel.registerDivisionValues(
+            //       widget.divisionType,
+            //       doubleValue,
+            //       widget.purchaseStatus,
+            //     );
+            //   } else {
+            //     widget.totalModel.registerDivisionValues(
+            //       widget.divisionType,
+            //       0,
+            //       widget.purchaseStatus,
+            //     );
+            //   }
+            //   widget.notifyParent();
+            // },
           ),
         ),
       ],

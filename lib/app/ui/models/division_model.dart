@@ -12,10 +12,10 @@ class DivisionModel {
   });
 
   bool get isValuesEmpty {
-    if (valueFiftyPercent > 0 ||
-        valueSeventyPercent > 0 ||
-        isadoraValue > 0 ||
-        samuelValue > 0) {
+    if (valueFiftyPercent <= 0 ||
+        valueSeventyPercent <= 0 ||
+        isadoraValue <= 0 ||
+        samuelValue <= 0) {
       return true;
     } else {
       return false;
@@ -23,14 +23,14 @@ class DivisionModel {
   }
 
   double get presentValueFiftyPercent =>
-      valueFiftyPercent - valueSeventyPercent - isadoraValue - samuelValue;
+      valueFiftyPercent - (valueSeventyPercent + isadoraValue + samuelValue);
 
   double get presentValueSeventyPercent =>
-      valueSeventyPercent - valueFiftyPercent - isadoraValue - samuelValue;
+      valueSeventyPercent - (valueFiftyPercent + isadoraValue + samuelValue);
 
   double get presentIsadoraValue =>
-      isadoraValue - samuelValue - valueFiftyPercent - valueSeventyPercent;
+      isadoraValue - (valueFiftyPercent + valueSeventyPercent + samuelValue);
 
   double get presentSamuelValue =>
-      samuelValue - isadoraValue - valueFiftyPercent - valueSeventyPercent;
+      samuelValue - (valueFiftyPercent + valueSeventyPercent + isadoraValue);
 }

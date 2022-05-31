@@ -33,35 +33,65 @@ class TotalModel {
         break;
     }
 
-    calculateIsadoraTotalValue(purchaseStatus);
-    calculateSamuelTotalValue(purchaseStatus);
+    if (purchaseStatus == PurchaseStatus.present) {
+      presentCalculateTotalValue();
+    } else {
+      pastCalculateTotalValue();
+    }
   }
 
-  void calculateIsadoraTotalValue(PurchaseStatus purchaseStatus) {
+  void resetTotalValues() {
     isadoraTotalValue = 0;
-
-    if (purchaseStatus == PurchaseStatus.present) {
-      isadoraTotalValue += divisionModel.presentValueFiftyPercent / 2;
-      isadoraTotalValue += divisionModel.presentValueSeventyPercent * 0.3;
-      isadoraTotalValue += divisionModel.presentIsadoraValue;
-    } else {
-      isadoraTotalValue += divisionModel.valueFiftyPercent / 2;
-      isadoraTotalValue += divisionModel.valueSeventyPercent * 0.3;
-      isadoraTotalValue += divisionModel.isadoraValue;
-    }
-  }
-
-  void calculateSamuelTotalValue(PurchaseStatus purchaseStatus) {
     samuelTotalValue = 0;
-
-    if (purchaseStatus == PurchaseStatus.present) {
-      samuelTotalValue += divisionModel.presentValueFiftyPercent / 2;
-      samuelTotalValue += divisionModel.presentValueSeventyPercent * 0.7;
-      samuelTotalValue += divisionModel.presentSamuelValue;
-    } else {
-      samuelTotalValue += divisionModel.valueFiftyPercent / 2;
-      samuelTotalValue += divisionModel.valueSeventyPercent * 0.7;
-      samuelTotalValue += divisionModel.samuelValue;
-    }
   }
+
+  void pastCalculateTotalValue() {
+    resetTotalValues();
+
+    isadoraTotalValue += divisionModel.valueFiftyPercent / 2;
+    isadoraTotalValue += divisionModel.valueSeventyPercent * 0.3;
+    isadoraTotalValue += divisionModel.isadoraValue;
+    samuelTotalValue += divisionModel.valueFiftyPercent / 2;
+    samuelTotalValue += divisionModel.valueSeventyPercent * 0.7;
+    samuelTotalValue += divisionModel.samuelValue;
+  }
+
+  void presentCalculateTotalValue() {
+    resetTotalValues();
+
+    isadoraTotalValue += divisionModel.presentValueFiftyPercent / 2;
+    isadoraTotalValue += divisionModel.presentValueFiftyPercent * 0.3;
+    isadoraTotalValue += divisionModel.presentIsadoraValue;
+    samuelTotalValue += divisionModel.presentValueFiftyPercent / 2;
+    samuelTotalValue += divisionModel.presentValueFiftyPercent * 0.7;
+    samuelTotalValue += divisionModel.presentSamuelValue;
+  }
+
+  // void calculateIsadoraTotalValue(PurchaseStatus purchaseStatus) {
+  //   isadoraTotalValue = 0;
+
+  //   if (purchaseStatus == PurchaseStatus.present) {
+  //     isadoraTotalValue += divisionModel.presentValueFiftyPercent / 2;
+  //     isadoraTotalValue += divisionModel.presentValueSeventyPercent * 0.3;
+  //     isadoraTotalValue += divisionModel.presentIsadoraValue;
+  //   } else {
+  //     isadoraTotalValue += divisionModel.valueFiftyPercent / 2;
+  //     isadoraTotalValue += divisionModel.valueSeventyPercent * 0.3;
+  //     isadoraTotalValue += divisionModel.isadoraValue;
+  //   }
+  // }
+
+  // void calculateSamuelTotalValue(PurchaseStatus purchaseStatus) {
+  //   samuelTotalValue = 0;
+
+  //   if (purchaseStatus == PurchaseStatus.present) {
+  //     samuelTotalValue += divisionModel.presentValueFiftyPercent / 2;
+  //     samuelTotalValue += divisionModel.presentValueSeventyPercent * 0.7;
+  //     samuelTotalValue += divisionModel.presentSamuelValue;
+  //   } else {
+  //     samuelTotalValue += divisionModel.valueFiftyPercent / 2;
+  //     samuelTotalValue += divisionModel.valueSeventyPercent * 0.7;
+  //     samuelTotalValue += divisionModel.samuelValue;
+  //   }
+  // }
 }

@@ -28,8 +28,9 @@ class _HomePageState extends State<HomePage> {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text(
-          'Rachador de compras'.toUpperCase(),
-          style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w700),
+          'Rachador de \n compras'.toUpperCase(),
+          textAlign: TextAlign.center,
+          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
         ),
         actions: [
           const Center(
@@ -42,7 +43,7 @@ class _HomePageState extends State<HomePage> {
             activeColor: getPrimaryContainerColor(context),
             inactiveThumbColor: getPrimaryContainerColor(context),
             value: purchaseStatus == PurchaseStatus.present ? true : false,
-            onChanged: !totalModel.divisionModel.isValuesEmpty
+            onChanged: totalModel.divisionModel.isValuesEmpty
                 ? (bool newValue) {
                     setState(
                       () => newValue == true

@@ -15,7 +15,7 @@ class ValeCardWidget extends StatelessWidget {
         borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Padding(
             padding: EdgeInsets.only(right: getScreenWidth(context) * 0.03),
@@ -37,7 +37,7 @@ class ValeCardWidget extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(left: getScreenWidth(context) * 0.10),
+            padding: EdgeInsets.only(left: getScreenWidth(context) * 0.03),
             child: Align(
               alignment: Alignment.centerLeft,
               child: Image.asset(
@@ -47,21 +47,15 @@ class ValeCardWidget extends StatelessWidget {
             ),
           ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Padding(
-                padding: EdgeInsets.only(left: getScreenWidth(context) * 0.10),
-                child: Text(
-                  cardOwner.toUpperCase(),
-                  style: const TextStyle(fontSize: 10, letterSpacing: 2),
-                ),
+              Text(
+                cardOwner.toUpperCase(),
+                style: const TextStyle(fontSize: 10, letterSpacing: 2),
               ),
-              Align(
-                alignment: Alignment.bottomRight,
-                child: Image.asset(
-                  'assets/images/vale-card-logo.png',
-                  width: getScreenWidth(context) * 0.2,
-                ),
+              Image.asset(
+                'assets/images/vale-card-logo.png',
+                width: getScreenWidth(context) * 0.2,
               ),
             ],
           ),
